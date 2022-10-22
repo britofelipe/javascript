@@ -9,15 +9,23 @@ addButton.addEventListener("click", function(event){
     
     // Creating patient object
     var patient = generatePatientFromForm(form);
-
+    
     // Creating Tr from Patient
     var patientTr = createTr(patient);
+
+    var errors = validatePatient(patient);
+
+    if (errors.length > 0){
+        showErrorMessages(errors);
+        return;
+    } 
 
     // Adding this Tr to the table
     var table = document.querySelector("#patients-table")
     table.appendChild(patientTr);
 
-    console.log("Paciente adicionado");
+    console.log("Patient added");
+
 })
 
 function generatePatientFromForm(form){
@@ -35,8 +43,6 @@ function generatePatientFromForm(form){
 function createTr(patient){
     var patientTr = document.createElement("tr");
 
-    // bmiTd.textContent = calculateBmi(patient.weight,patient.height);
-
     patientTr.appendChild(createTd(patient.name, "info-nome"));
     patientTr.appendChild(createTd(patient.weight, "info-peso"));
     patientTr.appendChild(createTd(patient.height, "info-altura"));
@@ -52,4 +58,32 @@ function createTd(element, elementClass){
     td.classList.add(elementClass);
 
     return td;
+}
+
+function validatePatient(patient){
+    var errorMessage = [];
+    if(patient.name.length == 0)
+        errorMessage.push("Name field cannot be blank")
+
+    if(!validateWeight(patient.weight) || patient.weight.length == 0) 
+        errorMessage.push("Invalid Weight");
+    
+    if(!validateHeight(patient.height) || patient.height.length == 0)
+        errorMessage.push("Invalid Height");
+
+    if(patient.fat.length == 0)
+        errorMessage.push("Fat field cannot be blank")
+    
+    return errorMessage;
+}
+
+function showErrorMessages(errors){
+    var ul = document.querySelector("#error-messages")
+    ul.innerHTML = ""; // Empties the ul so as the messages do not accumulate
+
+    errors.forEach(function(error) {
+        var li = document.createElement("li");
+        li.textContent = error;
+        ul.appendChild(li);
+    });
 }
