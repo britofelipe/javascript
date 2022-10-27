@@ -11,8 +11,7 @@ addButton.addEventListener("click", function(event){
     var patient = generatePatientFromForm(form);
     
     // Creating Tr from Patient
-    var patientTr = createTr(patient);
-
+    
     var errors = validatePatient(patient);
 
     if (errors.length > 0){
@@ -21,12 +20,28 @@ addButton.addEventListener("click", function(event){
     } 
 
     // Adding this Tr to the table
-    var table = document.querySelector("#patients-table")
-    table.appendChild(patientTr);
+    addPatientInTable(patient);
+
+    form.reset();
+
+    var errorMessages = document.querySelector("#error-messages")
+    errorMessages.innerHTML = "";
 
     console.log("Patient added");
 
 })
+
+function addPatientInTable(patient){
+    var patientTr = createTr(patient);
+    var table = document.querySelector("#patients-table")
+    table.appendChild(patientTr);
+}
+
+function addPatientInTablePortuguese(patient){
+    var patientTr = createTrPortuguese(patient);
+    var table = document.querySelector("#patients-table")
+    table.appendChild(patientTr);
+}
 
 function generatePatientFromForm(form){
     var patient = {
@@ -48,6 +63,18 @@ function createTr(patient){
     patientTr.appendChild(createTd(patient.height, "info-altura"));
     patientTr.appendChild(createTd(patient.fat, "info-gordura"));
     patientTr.appendChild(createTd(patient.bmi, "info-imc"));
+
+    return patientTr;
+}
+
+function createTrPortuguese(patient){
+    var patientTr = document.createElement("tr");
+
+    patientTr.appendChild(createTd(patient.nome, "info-nome"));
+    patientTr.appendChild(createTd(patient.peso, "info-peso"));
+    patientTr.appendChild(createTd(patient.altura, "info-altura"));
+    patientTr.appendChild(createTd(patient.gordura, "info-gordura"));
+    patientTr.appendChild(createTd(patient.imc, "info-imc"));
 
     return patientTr;
 }

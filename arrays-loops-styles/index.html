@@ -14,9 +14,13 @@
 				<h2 class="title">Aparecida Nutricionist</h2>
 			</div>
 		</header>
-		<main>
+		<main> 
 			<section class="container">
 				<h2>My patients</h2>
+
+				<label for="filter-table">Filter:</label>
+				<input type="text" name="filter" id="filter-table" placeholder="Write patient's name">
+				
 				<table>
 					<thead>
 						<tr>
@@ -69,6 +73,9 @@
 					</tbody>
 				</table>
 
+				<button id="buscar-paciente" class="botao bto-principal">Search</button>
+				<span id="error-ajax" class="invisible">Error on search</span>
+
 			</section>
 		</main>
 
@@ -99,5 +106,9 @@
 		</section>
 		<script src="js/calculate-bmi.js"></script>
 		<script src="js/form.js"></script>
+		<script src="js/remove-patient.js"></script>
+		<script src="js/filter.js"></script>
+		<script src="js/search-patient.js"></script>
+
 	</body>
 </html>
