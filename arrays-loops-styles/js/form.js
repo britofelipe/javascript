@@ -1,23 +1,23 @@
 var addButton = document.querySelector("#adicionar-paciente");
 
-addButton.addEventListener("click", function(event){
-    
+addButton.addEventListener("click", function (event) {
+
     event.preventDefault(); // So as the page do not reload
 
     // Creating form variable
     var form = document.querySelector("#form-adiciona");
-    
+
     // Creating patient object
     var patient = generatePatientFromForm(form);
-    
+
     // Creating Tr from Patient
-    
+
     var errors = validatePatient(patient);
 
-    if (errors.length > 0){
+    if (errors.length > 0) {
         showErrorMessages(errors);
         return;
-    } 
+    }
 
     // Adding this Tr to the table
     addPatientInTable(patient);
@@ -31,19 +31,19 @@ addButton.addEventListener("click", function(event){
 
 })
 
-function addPatientInTable(patient){
+function addPatientInTable(patient) {
     var patientTr = createTr(patient);
     var table = document.querySelector("#patients-table")
     table.appendChild(patientTr);
 }
 
-function addPatientInTablePortuguese(patient){
+function addPatientInTablePortuguese(patient) {
     var patientTr = createTrPortuguese(patient);
     var table = document.querySelector("#patients-table")
     table.appendChild(patientTr);
 }
 
-function generatePatientFromForm(form){
+function generatePatientFromForm(form) {
     var patient = {
         name: form.nome.value,
         weight: form.peso.value,
@@ -55,7 +55,7 @@ function generatePatientFromForm(form){
     return patient;
 }
 
-function createTr(patient){
+function createTr(patient) {
     var patientTr = document.createElement("tr");
 
     patientTr.appendChild(createTd(patient.name, "info-nome"));
@@ -67,7 +67,7 @@ function createTr(patient){
     return patientTr;
 }
 
-function createTrPortuguese(patient){
+function createTrPortuguese(patient) {
     var patientTr = document.createElement("tr");
 
     patientTr.appendChild(createTd(patient.nome, "info-nome"));
@@ -79,7 +79,7 @@ function createTrPortuguese(patient){
     return patientTr;
 }
 
-function createTd(element, elementClass){
+function createTd(element, elementClass) {
     var td = document.createElement("td");
     td.textContent = element;
     td.classList.add(elementClass);
@@ -87,28 +87,28 @@ function createTd(element, elementClass){
     return td;
 }
 
-function validatePatient(patient){
+function validatePatient(patient) {
     var errorMessage = [];
-    if(patient.name.length == 0)
+    if (patient.name.length == 0)
         errorMessage.push("Name field cannot be blank")
 
-    if(!validateWeight(patient.weight) || patient.weight.length == 0) 
+    if (!validateWeight(patient.weight) || patient.weight.length == 0)
         errorMessage.push("Invalid Weight");
-    
-    if(!validateHeight(patient.height) || patient.height.length == 0)
+
+    if (!validateHeight(patient.height) || patient.height.length == 0)
         errorMessage.push("Invalid Height");
 
-    if(patient.fat.length == 0)
+    if (patient.fat.length == 0)
         errorMessage.push("Fat field cannot be blank")
-    
+
     return errorMessage;
 }
 
-function showErrorMessages(errors){
+function showErrorMessages(errors) {
     var ul = document.querySelector("#error-messages")
     ul.innerHTML = ""; // Empties the ul so as the messages do not accumulate
 
-    errors.forEach(function(error) {
+    errors.forEach(function (error) {
         var li = document.createElement("li");
         li.textContent = error;
         ul.appendChild(li);
